@@ -20,7 +20,7 @@ def ScraperBot(Url=None,Make=None,Model=None,writer=None):
     ValueList = [value.text for value in ValueData]
     Make = Make
     Model = Model
-    Source = "Christie’s"
+    Source = "Christie‚Äôs"
     Link = Url
 
     if ModelList:
@@ -76,14 +76,40 @@ def DateDetails(DateList=None):
                 Day = date[0] 
                 Month= date[1]
                 Year = date[2]
-                return Day,Month,Year
+                MonthNumber = month_string_to_number(Month)
+                return Day,MonthNumber,Year
             else:
                 Day = date[0]+date[1]+date[2]
                 Month= date[3]
                 Year = date[4]
-                return Day,Month,Year
+                MonthNumber = month_string_to_number(Month)
+                return Day,MonthNumber,Year
         else:
             return Day,Month,Year
     else:
         return Day,Month,Year
 
+
+
+def month_string_to_number(string):
+    m = {
+        'jan': 1,
+        'feb': 2,
+        'mar': 3,
+        'apr':4,
+        'may':5,
+        'jun':6,
+        'jul':7,
+        'aug':8,
+        'sep':9,
+        'oct':10,
+        'nov':11,
+        'dec':12
+        }
+    s = string.strip()[:3].lower()
+
+    try:
+        out = m[s]
+        return out
+    except:
+        return None

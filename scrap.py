@@ -20,7 +20,7 @@ def ScraperBot(Url=None,Make=None,Model=None,writer=None):
     ValueList = [value.text for value in ValueData]
     Make = Make
     Model = Model
-    Source = "Christie‚Äôs"
+    Source = "Christie's"
     Link = Url
 
     if ModelList:

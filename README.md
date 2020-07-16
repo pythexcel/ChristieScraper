@@ -17,17 +17,17 @@
 Note: In example i used python3 because if multiple python installed
  ### Examples
 
- * `python3 main.py -m tornek-rayville -d tr-900`
+ * `python3 main.py -m "tornek rayville" -d "tr-900"`
  
- * `python3 main.py -m GREUBEL -d FORSEY`
+ * `python3 main.py -m "GREUBEL" -d "FORSEY"`
  
- * `python3 main.py -m PATEK -d PHILIPPE`
+ * `python3 main.py -m "PATEK PHILIPPE" -d "tr-900"`
 
- * `python3 main.py -m RICHARD -d MILLE`
+ * `python3 main.py -m "RICHARD" -d "MILLE"`
 
- * `python3 main.py -m AUDEMARS -d PIGUET`
+ * `python3 main.py -m "AUDEMARS" -d "PIGUET"`
 
- * `python3 main.py -m VACHERON -d CONSTANTIN`
+ * `python3 main.py -m "VACHERON" -d "CONSTANTIN"`
 
 
 

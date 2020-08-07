@@ -1,8 +1,8 @@
 import argparse, os
 
 from scrap import ScraperBot
-from orders import OrderItems
-
+from orders import ChristiesItems
+from sothebys import SothebysItems
 
 def main():
     parser = argparse.ArgumentParser()
@@ -20,7 +20,11 @@ def main():
         quit()
     else:
         try:
-            OrderItems(Make=Make,Model=Model)
+            ChristiesItems(Make=Make,Model=Model)
+        except Exception as error:
+            print(str(error))
+        try:
+            SothebysItems(Make=Make,Model=Model)
         except Exception as error:
             print(str(error))
 

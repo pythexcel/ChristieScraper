@@ -9,7 +9,7 @@ import csv
 
 
 
-def OrderItems(Make=None,Model=None):
+def ChristiesItems(Make=None,Model=None):
     if Make and Model is not None:
         print("[+] Success! Scrap Bot Starting!")
         SearchUrl = "https://www.christies.com/lotfinder/searchresults.aspx?sc_lang=en&lid=1&action=search&searchfrom=header&entry="+Make+"%20"+Model
@@ -33,9 +33,9 @@ def OrderItems(Make=None,Model=None):
                         print("Make and Model Non stop not matched in string count =",count)
                         if count == 10:
                             print("Make and Model Non stop not matched limit reached to 10 Quit scraper")
-                            quit()
+                            break
                     if status == True:
                         count = 0
-            print("[+] Data Scrap Done check csv file in current directory......>>>>>>>")
+            print("[+] Christies data Scrap Done check csv file in current directory......>>>>>>>")
     else:
         raise Exception("=====>Make and Model not should be None<=====")

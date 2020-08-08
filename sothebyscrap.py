@@ -53,7 +53,9 @@ def SothebyScraperBot(Url=None,Make=None,Model=None,writer=None,dates=None):
     Link = Url
     
     if ModelList:
-        if Make.lower() and Model.lower() in ModelList[0].lower():
+        searchmodel = Model.lower()
+        searchdata = searchmodel.replace(searchmodel,str(" "+searchmodel+" "))
+        if Make.lower() and searchdata in ModelList[0].lower():
             yeardata = ModelYear(ModelList=ModelList)
             if yeardata is not None:
                 yeardata = yeardata[:4]
@@ -81,6 +83,10 @@ def ModelYear(ModelList=None):
             listt = ["CIRCA","Circa","circa"]
             if ModelData[data] in listt:
                 nextIndex = data + 1
+                continue
+            Mlistt = ["MANUFACTURED","Manufactured","manufactured"]
+            if ModelData[data] in Mlistt:
+                nextIndex = data + 2
                 continue
         if nextIndex is not None:
             try:

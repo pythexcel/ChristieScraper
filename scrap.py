@@ -48,8 +48,13 @@ def ModelYear(ModelList=None):
         ModelData = ModelList[0].split(" ")
         nextIndex = None
         for data in range(0,len(ModelData)):
-            if ModelData[data] == "CIRCA":
+            listt = ["CIRCA","Circa","circa"]
+            if ModelData[data] in listt:
                 nextIndex = data + 1
+                continue
+            Mlistt = ["MANUFACTURED","Manufactured","manufactured"]
+            if ModelData[data] in Mlistt:
+                nextIndex = data + 2
                 continue
         if nextIndex is not None:
             data = ModelData[nextIndex]

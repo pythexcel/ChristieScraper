@@ -12,13 +12,22 @@ def SothebyScraperBot(Url=None,Make=None,Model=None,writer=None,dates=None):
     if ".html" in Url:
         page = requests.get(Url,headers=headers)
         soup = BeautifulSoup(page.text)
-        ModelData = soup.select(".lotdetail-details-content .lotdetail-guarantee")
-        ValueData = soup.find_all('span',{"class":"curr-convert"})[0] if soup.find_all('span',{"class":"curr-convert"}) else None
+        datedata = soup.select(".dtstart")
+        ModelData = soup.select(".lotdetail-subtitle")
         ModelList = [model.text for model in ModelData]
+        if not ModelList:
+            ModelData = soup.select(".lotdetail-guarantee")
+            ModelList = [model.text for model in ModelData]
+        ValueData = soup.find_all('span',{"class":"curr-convert"})[0] if soup.find_all('span',{"class":"curr-convert"}) else None
+        
+        datelist = [date.text for date in datedata]
         if ValueData is not None:
             dateval = ValueData.get('data-price')+" "+ValueData.get('data-orig-currency')
         else:
             dateval = None
+        datelist = datelist[-1]
+        dates = datelist.strip()
+        dates = [dates]
     else:
         page = requests.get(Url,headers=headers)
         soup = BeautifulSoup(page.text)
@@ -40,12 +49,14 @@ def SothebyScraperBot(Url=None,Make=None,Model=None,writer=None,dates=None):
 
     Make = Make
     Model = Model
-    Source = "Sotheby’s"
+    Source="Sotheby's"
     Link = Url
     
     if ModelList:
         if Make.lower() and Model.lower() in ModelList[0].lower():
             yeardata = ModelYear(ModelList=ModelList)
+            if yeardata is not None:
+                yeardata = yeardata[:4]
             Day,Month,Year = DateDetails(DateList=dates)
             try:
                 writer.writerow([Month,Day,Year,dateval,yeardata,Make,Model,Source,Link])
@@ -62,10 +73,13 @@ def SothebyScraperBot(Url=None,Make=None,Model=None,writer=None,dates=None):
 def ModelYear(ModelList=None):
     yeardata = None
     if ModelList:
-        ModelData = ModelList[0].split(" ")
+        ModelData = ModelList[0]
+        ModelData = ModelData.replace(u'\xa0', u' ')
+        ModelData = ModelData.split(" ")
         nextIndex = None
         for data in range(0,len(ModelData)):
-            if ModelData[data] == "CIRCA":
+            listt = ["CIRCA","Circa","circa"]
+            if ModelData[data] in listt:
                 nextIndex = data + 1
                 continue
         if nextIndex is not None:
@@ -99,11 +113,14 @@ def DateDetails(DateList=None):
                 MonthNumber = month_string_to_number(Month)
                 return Day,MonthNumber,Year
             else:
-                Day = date[0]+date[1]+date[2]
-                Month= date[3]
-                Year = date[4]
-                MonthNumber = month_string_to_number(Month)
-                return Day,MonthNumber,Year
+                try:
+                    Day = date[0]
+                    Month= date[1]
+                    Year = date[2]
+                    MonthNumber = month_string_to_number(Month)
+                    return Day,MonthNumber,Year
+                except Exception:
+                    return None,None,None
         else:
             return Day,Month,Year
     else:

@@ -51,25 +51,37 @@ def SothebyScraperBot(Url=None,Make=None,Model=None,writer=None,dates=None):
     Model = Model
     Source="Sotheby's"
     Link = Url
-    
     if ModelList:
-        searchmodel = Model.lower()
-        searchdata = searchmodel.replace(searchmodel,str(" "+searchmodel+" "))
-        if Make.lower() and searchdata in ModelList[0].lower():
-            yeardata = ModelYear(ModelList=ModelList)
-            if yeardata is not None:
-                yeardata = yeardata[:4]
-            Day,Month,Year = DateDetails(DateList=dates)
-            try:
-                writer.writerow([Month,Day,Year,dateval,yeardata,Make,Model,Source,Link])
-                print("Record inserted.....")
-                return True
-            except Exception:
-                print("[-] Faild! Data missing!")
+        checking = CheckModelExist(Data=ModelList[0].lower(),Model=Model)
+        if checking == False:
+            if Make.lower() in ModelList[0].lower():
+                yeardata = ModelYear(ModelList=ModelList)
+                if yeardata is not None:
+                    yeardata = yeardata[:4]
+                Day,Month,Year = DateDetails(DateList=dates)
+                try:
+                    writer.writerow([Month,Day,Year,dateval,yeardata,Make,Model,Source,Link])
+                    print("Record inserted.....")
+                    return True
+                except Exception:
+                    print("[-] Faild! Data missing!")
+            else:
+                return False
         else:
             return False
     else:
         pass
+    
+def CheckModelExist(Data=None,Model=None):
+    dataarray = Data.split(" ")
+    for dataobj in dataarray:
+        resut = True
+        if Model.lower() in dataobj:
+            chk = dataobj.split(Model)[-1]
+            findword = chk[0:1]
+            resut = findword.isnumeric()
+            return resut
+    return resut
 
 
 def ModelYear(ModelList=None):

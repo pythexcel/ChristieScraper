@@ -62,6 +62,7 @@ def ModelYear(ModelList=None):
             if len(yeardata) == 4:
                 return yeardata
             else:
+                yeardata = ''.join([n for n in yeardata if n.isdigit()])
                 return yeardata
         else:
             return yeardata

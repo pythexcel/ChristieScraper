@@ -30,6 +30,7 @@ def main():
             SothebysItems(Make=Make,Model=Model)
         except Exception as error:
             print(str(error))
+        
         try:
             PhillipsItems(Make=Make,Model=Model)
         except Exception as error:

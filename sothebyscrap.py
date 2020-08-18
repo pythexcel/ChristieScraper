@@ -13,8 +13,13 @@ def SothebyScraperBot(Url=None,Make=None,Model=None,writer=None,dates=None):
         page = requests.get(Url,headers=headers)
         soup = BeautifulSoup(page.text)
         datedata = soup.select(".dtstart")
-        ModelData = soup.select(".lotdetail-subtitle")
+        #ModelData = soup.select(".lotdetail-subtitle") 
+        ModelData = soup.select(".lotdetail-header-block > div")
         ModelList = [model.text for model in ModelData]
+        if len(ModelList) >= 2:
+            ModelList = [ModelList[0]+" "+ ModelList[1]]
+        else:
+            ModelList = []
         if not ModelList:
             ModelData = soup.select(".lotdetail-guarantee")
             ModelList = [model.text for model in ModelData]

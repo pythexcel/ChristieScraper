@@ -71,7 +71,7 @@ def SothebysItems(Make=None,Model=None):
                     print("Make and Model Non stop not matched in string count =",count)
                     if count == 10:
                         print("Make and Model Non stop not matched limit reached to 10 Quit scraper")
-                        quit()
+                        break
                 if status == True:
                     count = 0
             print("[+] All Data Scrap Done check csv file in current directory......>>>>>>>")

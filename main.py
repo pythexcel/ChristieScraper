@@ -3,6 +3,7 @@ import argparse, os
 from scrap import ScraperBot
 from orders import ChristiesItems
 from sothebys import SothebysItems
+from phillipsitems import PhillipsItems
 
 def main():
     parser = argparse.ArgumentParser()
@@ -19,15 +20,20 @@ def main():
         print("Please include Model using the -d in the cammand section of this script.")
         quit()
     else:
+        
         try:
             ChristiesItems(Make=Make,Model=Model)
         except Exception as error:
             print(str(error))
+        
         try:
             SothebysItems(Make=Make,Model=Model)
         except Exception as error:
             print(str(error))
-
+        try:
+            PhillipsItems(Make=Make,Model=Model)
+        except Exception as error:
+            print(str(error))
 if __name__ == "__main__":
     main()
 
